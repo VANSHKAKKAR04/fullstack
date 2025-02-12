@@ -3,7 +3,9 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [user, setUser] = useState({
     email: "",
@@ -33,13 +35,13 @@ const Login = () => {
           title: "Success",
           description: res.data.message,
         });
+        navigate("/");
       }
     } catch (error) {
       // alert(error.response.data.message);
       toast({
         title: "Error",
-        description:
-          error.response?.data?.message || "An unexpected error occurred.",
+        description: error.data.message,
         variant: "destructive",
       });
     }
